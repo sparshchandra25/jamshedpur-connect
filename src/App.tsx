@@ -1,0 +1,230 @@
+import { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Categories from './components/Categories';
+import AboutJamshedpur from './components/AboutJamshedpur';
+import VerifiedPros from './components/VerifiedPros';
+import Process from './components/Process';
+import Reviews from './components/Reviews';
+import AboutUs from './components/AboutUs';
+import BusinessOnboarding from './components/BusinessOnboarding';
+import Footer from './components/Footer';
+import BookingModal from './components/BookingModal';
+import RegisterModal from './components/RegisterModal';
+import AuthModal from './components/AuthModal';
+import { Pro } from './types';
+
+export default function App() {
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  // Visitor authentication state (persistent database proxy)
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string; phone: string; neighborhood: string } | null>(() => {
+    try {
+      const saved = localStorage.getItem('jc_current_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+
+  // Simulate initial app resources loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem('jc_current_user');
+    setCurrentUser(null);
+  };
+
+  const handleAuthSuccess = (user: { name: string; email: string; phone: string; neighborhood: string }) => {
+    setCurrentUser(user);
+  };
+
+  // Global filters
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState('');
+
+  // Booking Modal State
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingPrefilledService, setBookingPrefilledService] = useState('');
+  const [bookingPrefilledPro, setBookingPrefilledPro] = useState<Pro | null>(null);
+
+  // Register Modal State
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  const handleOpenBooking = (serviceName: string = '', pro: Pro | null = null) => {
+    setBookingPrefilledService(serviceName);
+    setBookingPrefilledPro(pro);
+    setIsBookingOpen(true);
+  };
+
+  const handleCloseBooking = () => {
+    setIsBookingOpen(false);
+    setBookingPrefilledService('');
+    setBookingPrefilledPro(null);
+  };
+
+  const handleOpenRegister = () => {
+    setIsRegisterOpen(true);
+  };
+
+  const handleCloseRegister = () => {
+    setIsRegisterOpen(false);
+  };
+
+  if (isPageLoading) {
+    return (
+      <div className="fixed inset-0 bg-[#000000] text-white flex flex-col items-center justify-center p-6 z-[9999]" id="full-page-splash-screen">
+        {/* Soft radial grey/white accent glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none" />
+        
+        {/* Additional peripheral neutral glows */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-zinc-800/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-neutral-800/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="text-center max-w-md mx-auto space-y-8 relative z-10 flex flex-col items-center">
+          {/* Logo Container with active entrance and metallic pulsing glow effect */}
+          <div className="relative flex items-center justify-center mb-1 animate-[logo-entrance_0.6s_cubic-bezier(0.16,1,0.3,1)_both]">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-zinc-500 via-neutral-300 to-zinc-600 p-[2px] shadow-[0_0_30px_rgba(255,255,255,0.15)] animate-[pulse-glow_2s_infinite_ease-in-out_alternate]">
+              <div className="w-full h-full bg-[#000000] rounded-[14px] flex items-center justify-center">
+                <span className="font-display font-black text-xl bg-gradient-to-r from-white via-zinc-200 to-neutral-400 bg-clip-text text-transparent">JC</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3.5">
+            {/* Main Branding - Elegant scale/fade entrance */}
+            <h1 className="text-3xl sm:text-4xl font-display font-extrabold tracking-tight text-white animate-[logo-entrance_0.6s_cubic-bezier(0.16,1,0.3,1)_0.1s_both]">
+              Jamshedpur <span className="bg-gradient-to-r from-white via-zinc-300 to-neutral-400 bg-clip-text text-transparent">Connect</span>
+            </h1>
+            
+            {/* Tagline - Sequenced fade & slide-in entrance */}
+            <p className="text-xs text-neutral-300 font-mono tracking-[0.25em] font-bold uppercase animate-[tagline-entrance_0.5s_cubic-bezier(0.16,1,0.3,1)_0.35s_both]">
+              "We take no cuts"
+            </p>
+          </div>
+
+          {/* Tactile progress indicator - Thicker bar with silver-gradient sweep */}
+          <div className="w-56 h-[5px] bg-zinc-900 rounded-full overflow-hidden relative shadow-[inset_0_1px_2px_rgba(0,0,0,0.8)] animate-[logo-entrance_0.6s_cubic-bezier(0.16,1,0.3,1)_0.2s_both]">
+            <div className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-zinc-500 via-neutral-200 to-white shadow-[0_0_12px_rgba(255,255,255,0.45)] animate-[progress_2s_cubic-bezier(0.22,1,0.36,1)_forwards]" />
+          </div>
+
+          {/* Staggered peer-to-peer highlights emphasizing direct connectivity */}
+          <div className="text-xs text-zinc-400 font-medium tracking-wide space-y-1.5 pt-1 animate-[tagline-entrance_0.5s_cubic-bezier(0.16,1,0.3,1)_0.55s_both]">
+            <p className="text-neutral-200 font-semibold">100% Peer-to-Peer Connections</p>
+            <p className="text-[10px] text-zinc-500 font-medium">Direct WhatsApp • Zero Commissions • Verified Listings</p>
+          </div>
+        </div>
+
+        {/* Global styles for high-fidelity micro-interactions */}
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes logo-entrance {
+            0% { transform: scale(0.92); opacity: 0; filter: blur(4px); }
+            100% { transform: scale(1); opacity: 1; filter: blur(0); }
+          }
+          @keyframes tagline-entrance {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes pulse-glow {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.08)); }
+            100% { filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.25)) drop-shadow(0 0 8px rgba(156, 163, 175, 0.15)); }
+          }
+          @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+          }
+        `}} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white font-sans antialiased text-[#0f172a] selection:bg-sky-200" id="app-root-wrapper">
+      {/* Top Banner Accent Line */}
+      <div className="h-1.5 bg-gradient-to-r from-sky-400 via-[#1c2541] to-emerald-400 w-full" id="top-accent-banner" />
+
+      {/* Navigation Header */}
+      <Header 
+        onOpenBooking={() => handleOpenBooking()} 
+        onOpenRegister={handleOpenRegister} 
+        currentUser={currentUser}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onSignOut={handleSignOut}
+      />
+
+      {/* Main Sections Assembly */}
+      <main id="main-content">
+        {/* Hero search and location dashboard */}
+        <Hero 
+          onSearchChange={setSearchQuery}
+          onNeighborhoodSelect={setSelectedNeighborhood}
+          selectedNeighborhood={selectedNeighborhood}
+          onOpenBooking={(service) => handleOpenBooking(service)}
+        />
+
+        {/* Categories section */}
+        <Categories 
+          onSelectCategory={(category) => setSearchQuery(category)}
+          onOpenBooking={(service) => handleOpenBooking(service)}
+        />
+
+        {/* Rooted Jamshedpur stats and landmarks */}
+        <AboutJamshedpur />
+
+        {/* Top-rated local professionals listing with search filter results */}
+        <VerifiedPros 
+          searchQuery={searchQuery}
+          selectedNeighborhood={selectedNeighborhood}
+          onOpenBooking={(service, pro) => handleOpenBooking(service, pro || null)}
+          onClearSearch={() => setSearchQuery('')}
+          onClearNeighborhood={() => setSelectedNeighborhood('')}
+        />
+
+        {/* Matchmaking process timeline */}
+        <Process />
+
+        {/* Customer reviews and testimonials */}
+        <Reviews />
+
+        {/* Our role as a connecting bridge about section */}
+        <AboutUs />
+
+        {/* Professional onboarding banner */}
+        <BusinessOnboarding onOpenRegister={handleOpenRegister} />
+      </main>
+
+      {/* Footer copyright and contact block */}
+      <Footer 
+        onOpenBooking={(service) => handleOpenBooking(service)} 
+        onOpenRegister={handleOpenRegister} 
+      />
+
+      {/* Modal overlays */}
+      <BookingModal 
+        isOpen={isBookingOpen}
+        onClose={handleCloseBooking}
+        prefilledService={bookingPrefilledService}
+        prefilledPro={bookingPrefilledPro}
+        currentUser={currentUser}
+      />
+
+      <RegisterModal 
+        isOpen={isRegisterOpen}
+        onClose={handleCloseRegister}
+      />
+
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+      />
+    </div>
+  );
+}
