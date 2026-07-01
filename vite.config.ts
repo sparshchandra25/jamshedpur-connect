@@ -18,7 +18,7 @@ hmr: process.env.DISABLE_HMR !== 'true',
 watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
 preview: {
-allowedHosts: ['jamshedpur-connect-production.up.railway.app'],
+allowedHosts: ['gojamshedpur.vercel.app'],
     },
   };
 });
