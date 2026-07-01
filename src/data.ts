@@ -212,8 +212,7 @@ export const VERIFIED_PROS: Pro[] = [
 export const REVIEWS: Review[] = [
   {
     id: 'review-1',
-    stars: 4.6
-    ,
+    stars: 5,
     text: '“Booked an electrician through Go Jamshedpur for my new flat in adarsh nagar. came right on time , just need help with a little in increasing repairmen”',
     author: 'Neha Agarwal',
     neighborhood: 'Bistupur, Jamshedpur',
@@ -221,7 +220,7 @@ export const REVIEWS: Review[] = [
   },
   {
     id: 'review-2',
-    stars: 4.1,
+    stars: 5,
     text: '“Finally, ek aisa aap jisme local trusted repair wale mill rahe ha! i needed help in Telco Colony at 9 PM. He was there within 40 minutes. Truly local, truly reliable.”',
     author: 'Sumit kumar',
     neighborhood: 'Telco Colony, Jamshedpur',
