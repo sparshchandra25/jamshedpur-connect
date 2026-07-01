@@ -136,7 +136,7 @@ export default function Footer({ onOpenBooking, onOpenRegister }: FooterProps) {
               </li>
               <li className="flex items-center gap-3" id="contact-email">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                <span>hello@jamshedpurconnect.in</span>
+                <span>gojamshedpur@gmail.com</span>
               </li>
               <li className="flex items-start gap-3" id="contact-address">
                 <MapPin className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
@@ -157,7 +157,7 @@ export default function Footer({ onOpenBooking, onOpenRegister }: FooterProps) {
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500" id="footer-sub-bar">
           <div className="space-y-1" id="footer-credits-container">
             <p id="footer-credits">
-              © 2026 Jamshedpur Connect. All rights reserved. Made with ❤️ by students in Jamshedpur.
+              © 2026 Go Jamshedpur. All rights reserved. Made with ❤️ by students in Jamshedpur.
             </p>
             <p className="text-[10px] text-gray-600 font-mono tracking-wider uppercase font-medium" id="footer-creator-credit">
               Created by Flightguy
